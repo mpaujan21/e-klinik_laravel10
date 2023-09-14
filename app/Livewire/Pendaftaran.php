@@ -8,12 +8,9 @@ use App\Models\Jadwal;
 
 class Pendaftaran extends Component
 {
-    public $idPoli;
-    public $idp;
-    public $dokters;
+    public $poli;
     public $dokter;
-    public $tanggalKunjungans;
-    public $tanggalKunjungan;
+    public $tanggal;
     public $jadwal;
     public $kuota;
     public $sisa_kuota;
@@ -23,29 +20,18 @@ class Pendaftaran extends Component
 
     public function render()
     {
-        $this->message = 'Tidak ada jadwal dokter';
         return view('livewire.pendaftaran');
     }
 
-    public function updatedIdPoli($value)
+    public function updatedPoli($value)
     {
-        unset($this->tanggalKunjungan);
+        unset($this->tanggal);
         unset($this->dokter);
         unset($this->sisa_kuota);
         unset($this->message);
     }
 
-    public function updatedIdp($value)
-    {
-        $this->message = 'Tidak ada jadwal dokter';
-    }
-
-    public function updatedPoli($value)
-    {
-        $this->message = 'Tidak ada jadwal dokter';
-    }
-
-    public function updatedTanggalKunjungan($value)
+    public function updatedTanggal($value)
     {
         unset($this->dokter);
         unset($this->message);
@@ -53,18 +39,18 @@ class Pendaftaran extends Component
         $this->jadwal = Jadwal::join('dokters', 'jadwals.id_dokter', '=', 'dokters.id_dokter')
                             ->join('users', 'dokters.username', '=', 'users.username')
                             ->where('tanggal', $value)
-                            ->where('id_poli', $this->idPoli)
+                            ->where('id_poli', $this->poli)
                             ->orderby('sisa_kuota', 'desc')
-                            ->get(['jadwals.*', 'dokters.id_dokter', 'users.nama'])
+                            ->get(['jadwals.id_jadwal', 'jadwals.kuota', 'jadwals.sisa_kuota', 'users.nama'])
                             ->first();
         $this->dokter = $this->jadwal->nama ?? null;
         $this->kuota = $this->jadwal->kuota ?? null;
         $this->sisa_kuota = $this->jadwal->sisa_kuota ?? null;
         $this->id_jadwal = $this->jadwal->id_jadwal ?? null;
 
-        // if ($this->dokter == null) {
-            $this->message = 'Tidak ada jadwal dokter';
-        // }
+        if ($this->dokter == null) {
+            $this->message = 'Tidak ada jadwal doktersadsa';
+        }
 
         if ($this->sisa_kuota == 0) {
             $this->sisa_kuota = null;

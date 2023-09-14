@@ -8,7 +8,7 @@
             <input wire:model="id_pasien" type="hidden" class="form-control" name="id_pasien" readonly>
             <div class="form-group">
                 <label for="poli">Jenis Poli</label>
-                <select wire:model="idPoli" class="form-control" name="idPoli" placeholder="Poli">
+                <select wire:model="poli" class="form-control" name="poli" placeholder="Poli">
                     <option value="">-- Pilih Poli --</option>
                     <option value=1>Umum</option>
                     <option value=2>Gigi</option>
@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label for="tanggal_kunjungan">Tanggal Kunjungan</label>
-                <input wire:model="tanggalKunjungan" type="date" class="form-control" name="tanggalKunjungan" placeholder="" min="<?= date('Y-m-d'); ?>">
+                <input wire:model="tanggal" type="date" class="form-control" name="tanggal" placeholder="" min="<?= date('Y-m-d'); ?>">
             </div>
             <div class="form-group">
                 <p style="color:red;">{{ $message }}</p>

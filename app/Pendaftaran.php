@@ -6,13 +6,16 @@ use Livewire\Component;
 
 use App\Models\Jadwal;
 
-class Daftar extends Component
+class Pendaftaran extends Component
 {
     public $idPoli;
+    public $poli;
+    public $idp;
     public $dokters;
     public $dokter;
     public $tanggalKunjungans;
     public $tanggalKunjungan;
+    public $tanggal;
     public $jadwal;
     public $kuota;
     public $sisa_kuota;
@@ -22,7 +25,8 @@ class Daftar extends Component
 
     public function render()
     {
-        return view('livewire.daftar');
+        $this->message = 'Tidak ada jadwal dokter';
+        return view('livewire.pendaftaran');
     }
 
     public function updatedIdPoli($value)
@@ -31,15 +35,15 @@ class Daftar extends Component
         unset($this->dokter);
         unset($this->sisa_kuota);
         unset($this->message);
+    }
+
+    public function updatedIdp($value)
+    {
         $this->message = 'Tidak ada jadwal dokter';
     }
 
-    public function updated($value)
+    public function updatedPoli($value)
     {
-        unset($this->tanggalKunjungan);
-        unset($this->dokter);
-        unset($this->sisa_kuota);
-        unset($this->message);
         $this->message = 'Tidak ada jadwal dokter';
     }
 
@@ -60,9 +64,9 @@ class Daftar extends Component
         $this->sisa_kuota = $this->jadwal->sisa_kuota ?? null;
         $this->id_jadwal = $this->jadwal->id_jadwal ?? null;
 
-        if ($this->dokter == null) {
+        // if ($this->dokter == null) {
             $this->message = 'Tidak ada jadwal dokter';
-        }
+        // }
 
         if ($this->sisa_kuota == 0) {
             $this->sisa_kuota = null;
