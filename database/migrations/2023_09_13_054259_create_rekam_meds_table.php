@@ -25,8 +25,8 @@ return new class extends Migration
             $table->text('id_obats')->nullable();
             $table->text('jumlah_obats')->nullable();
             $table->text('aturan_obats')->nullable();
-            $table->integer('status_lab');
-            $table->boolean('deleted', 1)->nullable();
+            $table->tinyInteger('status_lab');
+            $table->tinyInteger('deleted')->default(0);
             $table->timestamps();
         });
     }

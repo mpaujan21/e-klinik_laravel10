@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('id_kunjungan');
             $table->integer('id_jadwal');
             $table->integer('id_pasien');
-            $table->integer('no_antrian');
-            $table->boolean('deleted')->nullable();
+            $table->tinyInteger('no_antrian');
+            $table->tinyInteger('deleted')->default(0);
             $table->timestamps();
         });
     }

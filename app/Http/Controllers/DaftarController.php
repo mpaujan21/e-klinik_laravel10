@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Kunjungan;
 use App\Models\Jadwal;
+use App\Models\Pasien;
 use App\Models\User;
 
 class DaftarController extends Controller

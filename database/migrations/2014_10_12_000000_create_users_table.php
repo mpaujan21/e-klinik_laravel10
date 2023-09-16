@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('username', 45)->unique();
             $table->string('password', 255);
-            $table->string('email', 255);
-            $table->integer('role');
+            $table->string('email', 45);
+            $table->tinyInteger('role');
             $table->string('nama', 255);
-            $table->boolean('deleted');
+            $table->tinyInteger('deleted')->default(0);
             $table->timestamps();
         });
     }

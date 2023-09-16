@@ -1,12 +1,12 @@
 @extends('master')
-@foreach ($metadatas as $metadata)
+{{-- @foreach ($metadatas as $metadata)
     @section('judul_halaman')
         {{ $metadata->judul }}
     @endsection
     @section('deskripsi_halaman')
         {{ $metadata->deskripsi }}
     @endsection
-@endforeach
+@endforeach --}}
 @section('content')
 
     <!--Modal Konfirmasi Delete-->
@@ -58,7 +58,7 @@
                                     class="text">Hapus Rekam Medis</span></a>
                         </div>
                     </div>
-                    <form class="user" action="{{ route('rm.update') }}" method="post">
+                    <form class="user" action="#" method="post">
                         {{ csrf_field() }}
                         <input type="hidden" name="idpasien" value="{{ $data->id_pasien }}">
                         <input type="hidden" name="id" value="{{ $data->id }}">
@@ -96,7 +96,7 @@
                                     {{-- {{ Auth::user()->profesi !== 'Dokter' ? 'disabled="true"' : '' }}> --}}
                                     {{-- <option value="{{ $data->diagnosis }}" selected disabled>{{ $data->diagnosis->kode }} - {{ $data->diagnosis->nama }}</option> --}}
                                     @foreach ($icds as $icd)
-                                        <option value="{{ $icd->id_diagnosis }}">{{ $icd->kode }} - {{ $icd->nama }}</option>
+                                        <option value="{{ $icd->id_diagnosis }}">{{ $icd->kode }} - {{ $icd->nama_id }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -202,24 +202,18 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-4 mb-3 mb-sm-0">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
                                 @foreach ($idens as $iden)
-                                    <a href="{{ route('rm.list', $iden->id_pasien) }}" class="btn btn-danger btn-block"
+                                    <a href="{{ route('rm.riwayat.id', $iden->id_pasien) }}" class="btn btn-danger btn-block"
                                         name="simpan">
-                                        <i class="fas fa-arrow-left fa-fw"></i> kembali
+                                        <i class="fas fa-arrow-left fa-fw"></i> Kembali
                                     </a>
                                 @endforeach
                             </div>
-                            <div class="col-sm-4 mb-3 mb-sm-0">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
                                 <button type="submit" class="btn btn-primary btn-block" name="simpan"
                                     value="simpan_edit">
                                     <i class="fas fa-save fa-fw"></i> Simpan
-                                </button>
-                            </div>
-                            <div class="col-sm-4 mb-3 mb-sm-0">
-                                <button type="submit" class="btn btn-success btn-block" name="simpan"
-                                    value="simpan_tagihan">
-                                    <i class="fas fa-cart-plus fa-fw"></i> Simpan & Buat Tagihan
                                 </button>
                             </div>
                     </form>

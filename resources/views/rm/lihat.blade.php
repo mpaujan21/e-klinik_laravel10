@@ -1,12 +1,12 @@
 @extends('master')
-@foreach ($metadatas as $metadata)
+{{-- @foreach ($metadatas as $metadata)
     @section('judul_halaman')
-        {{-- {{ $metadata->Judul }} --}}
+        {{ $metadata->Judul }}
     @endsection
     @section('deskripsi_halaman')
-        {{-- {{ $metadata->Deskripsi }} --}}
+        {{ $metadata->Deskripsi }}
     @endsection
-@endforeach
+@endforeach --}}
 @section('content')
 
     <!--Modal Konfirmasi Delete-->
@@ -63,7 +63,8 @@
                                     class="text">Hapus Rekam Medis</span></a>
                         </div>
                     </div>
-                    <form class="user" action="{{ route('rm.update') }}" method="post">
+                    {{-- <form class="user" action="{{ route('rm.update') }}" method="post"> --}}
+                    <form class="user" action="#" method="post">
                         {{ csrf_field() }}
 
                         <input type="hidden" name="idpasien" value="{{ $data->id_pasien }}">
@@ -87,10 +88,7 @@
                                 :
                             </div>
                             <div class="col-sm-8">
-                                {{-- // TODO fix --}}
-                                {{-- <p class="text-md-left">dr. {{ get_value('users', $data->id_dokter, 'nama', 'id') }}</p> --}}
-                                {{-- {{ $data->dokter->user->nama }} --}}
-                                {{-- {{ $data->dokter->id_dokter }} --}}
+                                <p class="text-md-left">{{ $data->dokter->user->nama }}</p>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -134,7 +132,7 @@
                                 :
                             </div>
                             <div class="col-sm-8">
-                                <p class="text-md-left">{{ $data->diagnosis->kode }} - {{ $data->diagnosis->nama }}</p>
+                                <p class="text-md-left">{{ $data->diagnosis->kode }} - {{ $data->diagnosis->nama_id }}</p>
                             </div>
                         </div>
                         <div class="form-group row">

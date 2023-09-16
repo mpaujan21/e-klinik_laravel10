@@ -15,7 +15,7 @@ class JadwalController extends Controller
         $user = $request->user();
         $name = $user->nama;
         $id_pasien = User::where('username', $user->username)->first()->pasien->id_pasien;
-        $kunjungans = Kunjungan::where('id_pasien', $id_pasien)->where('deleted', 0)->get() ?? null;
+        $kunjungans = Kunjungan::where('id_pasien', $id_pasien)->where('deleted', '<>', 1)->get() ?? null;
 
         return view('jadwal.pasien', compact('kunjungans', 'name'));
     }

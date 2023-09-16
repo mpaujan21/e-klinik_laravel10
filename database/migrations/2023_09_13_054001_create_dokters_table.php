@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('dokters', function (Blueprint $table) {
             $table->id('id_dokter');
             $table->string('username', 45)->unique();
-            $table->integer('id_poli');
+            $table->tinyInteger('id_poli');
         });
     }
 

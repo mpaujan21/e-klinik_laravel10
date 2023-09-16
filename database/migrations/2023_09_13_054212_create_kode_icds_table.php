@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('kode_icds', function (Blueprint $table) {
             $table->id('id_diagnosis');
-            $table->string('kode', 255);
+            $table->string('kode', 45);
             $table->string('nama_id', 255);
         });
     }

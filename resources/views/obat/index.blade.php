@@ -54,7 +54,7 @@
                     <thead>
                         <tr>
                             <th style="width: 950px;">Nama Obat</th>
-                            <th>Sediaan</th>
+                            <th>Jenis</th>
                             <th>Dosis</th>
                             <th>Stok</th>
                             <th>Tindakan</th>
@@ -64,7 +64,7 @@
                         @foreach ($obats as $obat)
                             <tr>
                                 <td>{{ $obat->nama_obat }}</td>
-                                <td>{{ $obat->sediaan }}</td>
+                                <td>{{ $obat->jenis }}</td>
                                 <td>{{ $obat->dosis }} {{ $obat->satuan }}</td>
                                 <td>{{ $obat->stok }}</td>
                                 <td>

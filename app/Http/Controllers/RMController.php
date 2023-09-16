@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 use Auth;
 use App\Models\Dokter;
@@ -63,7 +64,7 @@ class RMController extends Controller
         // Decoding array input resep
         if (isset($request->resep)) {
             if (has_dupes(array_column($request->resep, 'id'))) {
-                $errors = new MessageBag(['resep' => ['resep yang sama tidak boleh dimasukan berulang']]);
+                $errors = new MessageBag(['resep' => ['Resep yang sama tidak boleh dimasukan berulang']]);
                 return back()->withErrors($errors);
             }
             $this->validate($request, [
@@ -81,9 +82,9 @@ class RMController extends Controller
 
         $newresep = array();
 
-        $oldresep = array_combine(encode(get_value('rm', $request->id, 'resep', 'id_rm')), encode(get_value('rm', $request->id, 'jumlah', 'id_rm')));
+        $oldresep = array_combine(encode(get_value('rm', $request->id, 'id_obats', 'id_rm')), encode(get_value('rm', $request->id, 'jumlah_obats', 'id_rm')));
         foreach ($request->resep as $resep) {
-            $newresep[$resep['id']] = $resep['jumlah'];
+            $newresep[$resep['id_obats']] = $resep['jumlah_obats'];
         }
         if (empty($oldresep)) {
             $resultanresep = resultan_resep($oldresep, $newresep);
@@ -131,7 +132,7 @@ class RMController extends Controller
         return redirect($buka)->with('pesan', $pesan);
     }
     
-    // TODO read & edit
+    // TODO edit bagian lab & obat masih error
     // Route::get('/rm/edit/{id}')
     public function edit_rm($id)
     {
@@ -140,7 +141,6 @@ class RMController extends Controller
             return abort(404, 'Halaman Tidak Ditemukan.');
         }
         foreach ($datas as $data) {
-            //mencari id pasien dari id RM
             if ($data->id_pasien != NULL) {
                 $id_pasien = $data->id_pasien;
                 $idens = Pasien::where('id_pasien', $id_pasien)->get();
@@ -159,7 +159,7 @@ class RMController extends Controller
                 $num['resep'] = 0;
             }
         }
-        // $dokters = DB::table('users')->where('profesi', 'Dokter')->get();
+        
         $icds = KodeIcd::all();
         $dokters = Dokter::all();
         $labs = Lab::all();
@@ -257,9 +257,9 @@ class RMController extends Controller
                 $errors = new MessageBag(['lab' => ['Lab yang sama tidak boleh dimasukan berulang']]);
                 return back()->withErrors($errors);
             }
-            // $this->validate($request, [
-            //     'lab.*.hasil' => 'required|numeric|digits_between:1,4',
-            // ]);
+            $this->validate($request, [
+                'lab.*.hasil' => 'required|numeric|digits_between:1,4',
+            ]);
             $lab_id = decode('lab', 'id', $request->lab);
             $lab_hasil = decode('lab', 'hasil', $request->lab);
             $status_lab = 1;
@@ -287,6 +287,7 @@ class RMController extends Controller
             $resep_jumlah = "";
             $resep_dosis = "";
         }
+
         $newresep = array();
         $oldresep = array();
         foreach ($request->resep as $resep) {
@@ -297,18 +298,18 @@ class RMController extends Controller
         } else {
             $resultanresep = $newresep;
         }
-        // $errors = validasi_stok($resultanresep);
-        $errors = NULL;
+
+        $errors = validasi_stok($resultanresep);
         if ($errors !== NULL) {
             return  back()->withErrors($errors);
         }
 
-        // foreach ($resultanresep as $key => $value) {
-        //     $perintah = kurangi_stok($key, $value);
-        //     if ($perintah === false) {
-        //         $habis = array_push($habis, $key);
-        //     }
-        // }
+        foreach ($resultanresep as $key => $value) {
+            $perintah = kurangi_stok($key, $value);
+            if ($perintah === false) {
+                $habis = array_push($habis, $key);
+            }
+        }
 
         RekamMed::create([
             'id_pasien' => $request->id_pasien,
@@ -323,6 +324,7 @@ class RMController extends Controller
             'jumlah_obats' => $resep_jumlah,
             'aturan_obats' => $resep_dosis,
             'status_lab' => $status_lab,
+            'deleted' => 0,
         ]);
 
         $pesan = 'Data Rekam Medis berhasil disimpan!';
@@ -339,7 +341,6 @@ class RMController extends Controller
         }
 
         foreach ($datas as $data) {
-            // TODO read again
             $id_pasien = $data->id_pasien;
             if ($data->id_labs != NULL) {
                 $data->labhasil = array_combine(encode($data->id_labs), encode($data->hasil_labs));
@@ -359,6 +360,6 @@ class RMController extends Controller
         $labs = Lab::all();
         $obats = Obat::all();
         $idens = Pasien::where('id_pasien', $id_pasien)->get();
-        return view('rm.lihat', compact('idens', 'datas', 'labs', 'obats', 'num'));
+        return view('rm.lihat', compact('idens', 'datas', 'num'));
     }
 }

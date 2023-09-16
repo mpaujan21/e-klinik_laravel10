@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('obats', function (Blueprint $table) {
             $table->id('id_obat');
             $table->string('nama_obat', 255);
-            $table->string('jenis', 255);
+            $table->string('jenis', 45);
             $table->integer('dosis');
-            $table->string('satuan', 255);
+            $table->string('satuan', 45);
             $table->string('stok', 255);
-            $table->boolean('deleted')->nullable();
+            $table->tinyInteger('deleted')->default(0);
             $table->timestamps();
         });
     }

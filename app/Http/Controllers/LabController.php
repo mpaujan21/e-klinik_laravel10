@@ -33,6 +33,7 @@ class LabController extends Controller
         if ($datas->count() <= 0) {
             return abort(404, 'Halaman Tidak Ditemukan.');
         }
+        
         foreach ($datas as $data) {
             if ($data->id_pasien != NULL) {
                 $id_pasien = $data->id_pasien;
@@ -52,6 +53,7 @@ class LabController extends Controller
                 $num['resep'] = 0;
             }
         }
+
         $labs = Lab::all();
         return view('lab.input', compact('idens', 'datas', 'labs',  'num'));
     }

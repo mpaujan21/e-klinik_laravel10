@@ -4,7 +4,9 @@ namespace App\Livewire;
 
 use Livewire\Component;
 
+use Auth;
 use App\Models\Jadwal;
+use App\Models\Pasien;
 
 class Pendaftaran extends Component
 {
@@ -20,6 +22,7 @@ class Pendaftaran extends Component
 
     public function render()
     {
+        $this->id_pasien = Pasien::where('username', Auth::user()->username)->first()->id_pasien;
         return view('livewire.pendaftaran');
     }
 
@@ -49,7 +52,7 @@ class Pendaftaran extends Component
         $this->id_jadwal = $this->jadwal->id_jadwal ?? null;
 
         if ($this->dokter == null) {
-            $this->message = 'Tidak ada jadwal doktersadsa';
+            $this->message = 'Tidak ada jadwal dokter';
         }
 
         if ($this->sisa_kuota == 0) {

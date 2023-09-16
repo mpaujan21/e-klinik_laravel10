@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id('id_jadwal');
             $table->integer('id_dokter');
             $table->date('tanggal');
-            $table->integer('kuota');
-            $table->integer('sisa_kuota');
-            $table->integer('no_antrian');
+            $table->tinyInteger('kuota');
+            $table->tinyInteger('sisa_kuota');
+            $table->tinyInteger('no_antrian');
             $table->timestamps();
         });
     }

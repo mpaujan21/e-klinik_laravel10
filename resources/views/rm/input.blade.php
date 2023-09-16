@@ -1,12 +1,12 @@
 @extends('master')
-{{-- @foreach ($metadatas as $metadata)
+{{-- @foreach ($metadatas as $metadata) --}}
     @section('judul_halaman')
-        {{ $metadata->judul }}
+        Input Rekam Medis
     @endsection
     @section('deskripsi_halaman')
-        {{ $metadata->deskripsi }}
+        Pilih pasien untuk menginput rekam medis
     @endsection
-@endforeach --}}
+{{-- @endforeach --}}
 @section('content')
 
     @if (!isset($idens))
@@ -31,13 +31,9 @@
                         <div class="form-group row">
                             <div class="col-sm-12 mb-3 mb-sm-0">
                                 <label for="dokter">Dokter Pemeriksa</label>
-                                <select class="form-control " name="id_dokter">
-                                    {{-- {{ Auth::user()->admin !== 1 ? (Auth::user()->profesi === 'Dokter' ? 'disabled="true"' : '') : '' }}> --}}
-                                    {{-- skenario Dokter --}}
-                                    {{-- bukan admin (true) exec ?, profesi dokter (true) exec ? jadi disabled=true --}}
-                                    {{-- {{ Auth::user()->role === 3 ? 'disabled="true"' : '' }}> --}}
+                                <select class="form-control " name="id_dokter" {{ Auth::user()->role === 3 ? 'disabled="true"' : '' }}>
                                     @foreach ($dokters as $dokter)
-                                        <option value="{{ $dokter->id_dokter }}"
+                                        <option value="{{ $dokter->id_dokter }}" 
                                             {{ $dokter->username === Auth::user()->username ? 'selected' : '' }}>{{ $dokter->user->nama }}
                                         </option>
                                     @endforeach
@@ -110,7 +106,7 @@
                                     {{-- {{ Auth::user()->profesi !== 'Dokter' ? 'disabled="true"' : '' }}> --}}
                                     <option value="" selected disabled>Pilih satu</option>
                                     @foreach ($obats as $obat)
-                                        <option value="{{ $obat->id }}">{{ $obat->nama_obat }} {{ $obat->sediaan }} {{ $obat->dosis }}{{ $obat->satuan }} - Stok: {{ $obat->stok }}</option>
+                                        <option value="{{ $obat->id_obat }}">{{ $obat->nama_obat }} {{ $obat->sediaan }} {{ $obat->dosis }}{{ $obat->satuan }} - Stok: {{ $obat->stok }}</option>
                                     @endforeach
                                 </select>
                             </div>

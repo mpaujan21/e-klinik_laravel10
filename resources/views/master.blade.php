@@ -9,7 +9,9 @@
 
     <!-- Custom fonts for this template-->
     <link href="{{ URL::asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ URL::asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -58,9 +60,54 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    
+
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="messagesDropdown" style="padding: 5px;">
+                                @if (Auth::user()->role === 1)
+                                    <span class="badge badge-success">Super Admin</span>
+                                @elseif (Auth::user()->role === 2)
+                                    <span class="badge badge-success">Admin Klinik</span>
+                                @elseif (Auth::user()->role === 3)
+                                    <span class="badge badge-success">Dokter</span>
+                                @elseif (Auth::user()->role === 4)
+                                    <span class="badge badge-success">Pasien</span>
+                                @elseif (Auth::user()->role === 5)
+                                    <span class="badge badge-success">Admin Farmasi</span>
+                                @elseif (Auth::user()->role === 6)
+                                    <span class="badge badge-success">Admin Lab</span>
+                                @endif
+                            </a>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 large">{{ ucfirst(Auth::user()->nama) }}</span>
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                {{-- <a class="dropdown-item" href="{{route('profile.edit')}}"> --}}
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profil
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
                     </ul>
 
                 </nav>
@@ -103,7 +150,7 @@
 
                     <!-- Content -->
                     @yield('content')
-                    
+
                 </div>
             </div>
             <!-- End of Main Content -->
