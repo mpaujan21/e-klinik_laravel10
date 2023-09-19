@@ -71,20 +71,10 @@
                     </div>
 
                     <div class="col-sm-5 mb-3 mb-sm-0">
-                        <select name="pemeriksaan" id="kondisi_gigi" class="selectpicker form-control" data-live-search="true" data-dropup-auto="false">
-                            <option value="" selected disabled>Pilih satu</option>
-                            <option value="sou">sound</option>
-                            <option value="mis">missing</option>
-                            <option value="amf">amalgam filling</option>
-                            <option value="gif">glass ionomer filling</option>
-                            <option value="fis">fissure sealant</option>
-                            <option value="car">caries</option>
-                            <option value="nvt">non-vital tooth</option>
-                            <option value="cfr">crown fractured</option>
-                            <option value="amf">amalgam filling</option>
-                            <option value="poc">porcelain crown</option>
-                            <option value="fmc">full metal crown</option>
-                            <option value="abu">abutment</option>
+                        <select name="pemeriksaan" id="kondisi_gigi" class="selectpicker form-control" data-live-search="true" data-dropup-auto="false">                            
+                            @foreach ($kondisi_gigis as $kondisi_gigi)
+                                <option value="{{ $kondisi_gigi->kode }}">{{ strtoupper($kondisi_gigi->kode) }} - {{ $kondisi_gigi->nama }}</option>
+                            @endforeach
                         </select>
                     </div>
 

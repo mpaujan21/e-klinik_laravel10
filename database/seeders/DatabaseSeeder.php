@@ -238,5 +238,43 @@ class DatabaseSeeder extends Seeder
                 ],
             ]
         );
+
+        $kodeGigi = [
+            ['kode' => 'sou', 'nama' => 'Gigi sehat, normal, tanpa kelainan'],
+            ['kode' => 'non', 'nama' => 'Gigi tidak ada/tidak diketahui'],
+            ['kode' => 'une', 'nama' => 'Un-erupted'],
+            ['kode' => 'pre', 'nama' => 'Partial erupted'],
+            ['kode' => 'imv', 'nama' => 'Impacted visible'],
+            ['kode' => 'ano', 'nama' => 'Anomali'],
+            ['kode' => 'dia', 'nama' => 'Diastema'],
+            ['kode' => 'att', 'nama' => 'Atrisi'],
+            ['kode' => 'abr', 'nama' => 'Abrasi'],
+            ['kode' => 'car', 'nama' => 'Caries / karies'],
+            ['kode' => 'cfr', 'nama' => 'Crown Fracture/ Fraktur Mahkota'],
+            ['kode' => 'nvt', 'nama' => 'Gigi Non Vital'],
+            ['kode' => 'rrx', 'nama' => 'Sisa Akar'],
+            ['kode' => 'mis', 'nama' => 'Gigi Hilang'],
+            ['kode' => 'amf', 'nama' => 'Amalgam Filling'],
+            ['kode' => 'gif', 'nama' => 'GIC/Silika'],
+            ['kode' => 'cof', 'nama' => 'Composite filling'],
+            ['kode' => 'fis', 'nama' => 'Fissure Sealant'],
+            ['kode' => 'inl', 'nama' => 'Inlay'],
+            ['kode' => 'onl', 'nama' => 'Onlay'],
+            ['kode' => 'fmc', 'nama' => 'Full Metal Crown'],
+            ['kode' => 'poc', 'nama' => 'Porcelain Crown'],
+            ['kode' => 'mpc', 'nama' => 'Metal Porcelain Crown'],
+            ['kode' => 'gmc', 'nama' => 'Gold Metal Crown'],
+            ['kode' => 'ret', 'nama' => 'Root Canal Treatment/Perawatan Saluran Akar'],
+            ['kode' => 'ipx', 'nama' => 'Implan'],
+            ['kode' => 'meb', 'nama' => 'Metal Bridge'],
+            ['kode' => 'pob', 'nama' => 'Porcelain Bridge'],
+            ['kode' => 'pon', 'nama' => 'Pontic'],
+            ['kode' => 'abu', 'nama' => 'Gigi abutment'],
+            ['kode' => 'prd', 'nama' => 'Partial Denture'],
+            ['kode' => 'fld', 'nama' => 'Full Denture'],
+            ['kode' => 'acr', 'nama' => 'Acrilic'],
+        ];
+
+        DB::table('kondisi_gigis')->insert($kodeGigi);
     }
 }

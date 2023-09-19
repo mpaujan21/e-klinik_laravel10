@@ -8,6 +8,7 @@ use Illuminate\Support\MessageBag;
 use Auth;
 use App\Models\Dokter;
 use App\Models\KodeIcd;
+use App\Models\KondisiGigi;
 use App\Models\Lab;
 use App\Models\Obat;
 use App\Models\Pasien;
@@ -374,6 +375,7 @@ class RMController extends Controller
     {
         $pasiens = $this->pasiens;
         $elemen_gigi = [];
+        $kondisi_gigis = KondisiGigi::all();
         $cont = [
             'aria' => 'true',
             'show' => 'show',
@@ -410,6 +412,6 @@ class RMController extends Controller
         $elemen_gigis = json_encode($elemen_gigi);
         $pemeriksaan_gigis = json_encode($pemeriksaan_gigi);
 
-        return view('rm.gigi', compact('pasiens', 'cont', 'elemen_gigis', 'pemeriksaan_gigis'));
+        return view('rm.gigi', compact('pasiens', 'cont', 'elemen_gigis', 'pemeriksaan_gigis', 'kondisi_gigis'));
     }
 }
