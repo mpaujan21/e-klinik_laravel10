@@ -24,12 +24,16 @@ Route::group(['middleware' => ['auth']], function () {
   // Dokter
   Route::middleware(['dokter'])->group(function () {
     Route::get('/rm/input', 'RMController@input_rm')->name('rm.input');
-  
+
     Route::get('/rm/input/{idpasien}', 'RMController@input_rmid')->name('rm.input.id');
 
     Route::get('/rm/edit/{id}', 'RMController@edit_rm')->name('rm.edit');
+
+    Route::get('/rm/gigi', 'RMController@rm_gigi')->name('rm.gigi');
     
     Route::post('/rm/simpan/', 'RMController@simpan_rm')->name('rm.simpan');
+
+    Route::post('/rm/edit/{id}', 'RMController@update_rm')->name('rm.update');
 
     Route::delete('/rm/hapus/{id}','RMController@hapus_rm')->name('rm.hapus');
   });

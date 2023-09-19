@@ -1983,6 +1983,10 @@ textarea.form-control {
   margin-bottom: 1rem;
 }
 
+.form-group2 {
+  margin-bottom: 0rem;
+}
+
 .form-text {
   display: block;
   margin-top: 0.25rem;

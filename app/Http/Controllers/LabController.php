@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 use App\Models\Pasien;
 use App\Models\Lab;
@@ -62,6 +63,10 @@ class LabController extends Controller
     public function simpan_hasil_lab(Request $request)
     {
         if (isset($request->lab)) {
+            if (has_dupes(array_column($request->lab, 'id'))) {
+                $errors = new MessageBag(['lab' => ['Lab yang sama tidak boleh dimasukan berulang']]);
+                return back()->withErrors($errors);
+            }
             $this->validate($request, [
                 'lab.*.hasil' => 'required|numeric|digits_between:1,4',
             ]);

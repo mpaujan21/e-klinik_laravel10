@@ -1,6 +1,6 @@
 @extends('master')
 @section('judul_halaman')
-    Upload Obat
+    Upload Data Obat
 @endsection
 @section('deskripsi_halaman')
     {{-- Upload excel stok obat --}}

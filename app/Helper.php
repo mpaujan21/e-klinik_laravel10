@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
+use App\Models\Obat;
+
 function hitung_usia($tgl_lhr)
 {
     $tglskrg = Carbon::now();
@@ -213,7 +215,7 @@ function cek_stok_warning($min)
 function kurangi_stok($id, $jumlah)
 {
     $resultan = get_value('obats', $id, 'stok', 'id_obat') - $jumlah;
-    DB::table('obats')->where('id_obat', $id)->update([
+    Obat::where('id_obat', $id)->update([
         'stok' => $resultan,
     ]);
 }

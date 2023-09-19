@@ -106,17 +106,21 @@ class DatabaseSeeder extends Seeder
             [
                 [
                 'id_dokter' => 1,
-                'tanggal' => Carbon::parse('2023-09-15'),
+                'tanggal' => Carbon::parse('2023-09-20'),
                 'kuota' => 10,
                 'sisa_kuota' => 10,
                 'no_antrian' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
                 ],
                 [
                 'id_dokter' => 2,
-                'tanggal' => Carbon::parse('2023-09-16'),
+                'tanggal' => Carbon::parse('2023-09-21'),
                 'kuota' => 10,
                 'sisa_kuota' => 10,
                 'no_antrian' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
                 ],
             ]
         );
@@ -143,6 +147,8 @@ class DatabaseSeeder extends Seeder
                 'satuan' => 'mg',
                 'stok' => 10,
                 'deleted' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
                 ],
                 [
                 'nama_obat' => 'Metronidazole',
@@ -151,6 +157,8 @@ class DatabaseSeeder extends Seeder
                 'satuan' => 'mg',
                 'stok' => 20,
                 'deleted' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
                 ],
                 [
                 'nama_obat' => 'Paracetamol',
@@ -159,6 +167,8 @@ class DatabaseSeeder extends Seeder
                 'satuan' => 'mg',
                 'stok' => 30,
                 'deleted' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
                 ],
                 [
                 'nama_obat' => 'Konidin',
@@ -167,6 +177,8 @@ class DatabaseSeeder extends Seeder
                 'satuan' => 'mg',
                 'stok' => 40,
                 'deleted' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
                 ],
             ]
         );

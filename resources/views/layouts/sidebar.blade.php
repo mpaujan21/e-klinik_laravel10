@@ -32,19 +32,21 @@
 
     <!-- Nav Item - RM Collapse Menu -->
     @if (Auth::user()->role === 1 || Auth::user()->role === 3 || Auth::user()->role === 4)
-        <li class="nav-item {{ set_menu(['rm.input', 'rm.riwayat', 'rm.input.id', 'rm.riwayat.id']) }}">
+        <li class="nav-item {{ set_menu(['rm.input', 'rm.riwayat', 'rm.input.id', 'rm.riwayat.id', 'rm.gigi']) }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
                 aria-expanded="true" aria-controls="collapseOne">
                 <i class="fas fa-fw fa-file-signature"></i>
                 <span>Rekam Medis</span>
             </a>
             <div id="collapseFive"
-                class="collapse {{ set_show(['rm.input', 'rm.riwayat', 'rm.input.id', 'rm.riwayat.id']) }}"
+                class="collapse {{ set_show(['rm.input', 'rm.riwayat', 'rm.input.id', 'rm.riwayat.id', 'rm.gigi']) }}"
                 aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     @if (Auth::user()->role !== 4)
                         <a class="collapse-item {{ set_menu(['rm.input', 'rm.input.id']) }}"
                             href="{{ route('rm.input') }}">Input RM</a>
+                        <a class="collapse-item {{ set_menu(['rm.gigi']) }}"
+                            href="{{ route('rm.gigi') }}">Input RM Gigi</a>
                     @endif
                     <a class="collapse-item {{ set_menu(['rm.riwayat', 'rm.riwayat.id']) }}"
                         href="{{ route('rm.riwayat') }}">Riwayat RM</a>

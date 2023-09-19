@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Livewire;
-
-use Livewire\Component;
+namespace App\Http\Livewire;
 
 use Auth;
-use App\Models\Jadwal;
-use App\Models\Pasien;
+use Livewire\Component;
 
-class Pendaftaran extends Component
+use App\Models\Jadwal;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+
+class FormDaftar extends Component
 {
     public $poli;
+    public $dokters;
     public $dokter;
     public $tanggal;
     public $jadwal;
@@ -18,12 +19,11 @@ class Pendaftaran extends Component
     public $sisa_kuota;
     public $message;
     public $id_jadwal;
-    public $id_pasien;
 
     public function render()
     {
-        $this->id_pasien = Pasien::where('username', Auth::user()->username)->first()->id_pasien;
-        return view('livewire.pendaftaran');
+        $this->id_pasien = Auth::User()->pasien->id_pasien;
+        return view('livewire.form-daftar');
     }
 
     public function updatedPoli($value)
@@ -33,7 +33,6 @@ class Pendaftaran extends Component
         unset($this->sisa_kuota);
         unset($this->message);
     }
-
     public function updatedTanggal($value)
     {
         unset($this->dokter);
@@ -44,7 +43,7 @@ class Pendaftaran extends Component
                             ->where('tanggal', $value)
                             ->where('id_poli', $this->poli)
                             ->orderby('sisa_kuota', 'desc')
-                            ->get(['jadwals.id_jadwal', 'jadwals.kuota', 'jadwals.sisa_kuota', 'users.nama'])
+                            ->get(['jadwals.*', 'dokters.id_dokter', 'users.nama'])
                             ->first();
         $this->dokter = $this->jadwal->nama ?? null;
         $this->kuota = $this->jadwal->kuota ?? null;

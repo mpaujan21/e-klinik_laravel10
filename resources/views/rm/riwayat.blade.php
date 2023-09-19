@@ -2,9 +2,9 @@
 @section('judul_halaman')
     Riwayat Rekam Medis
 @endsection
-@section('deskripsi_halaman')
+{{-- @section('deskripsi_halaman')
     Pilih pasien untuk melihat riwayat rekam medis
-@endsection
+@endsection --}}
 @section('content')
 
     <!--Modal Konfirmasi Delete-->
@@ -147,51 +147,6 @@
                     [5, 10, 20, 'Todos']
                 ]
             })
-        });
-    </script>
-
-    <script type="text/javascript">
-        var i = 0;
-        var a = 0;
-
-        function addpenunjang() {
-            var pen = $("#penunjang option:selected").html();
-            var penid = $("#penunjang").val();
-            var satuan = $("#penunjang option:selected").attr('satuan');
-            if (penid !== null) {
-                $("#dynamicTable").append('<tr><td><input type="hidden" name="lab[' + i + '][id]" value="' + penid +
-                    '" class="form-control" readonly></td><td width="30%"><input type="text" name="lab[' + i +
-                    '][nama]" value="' + pen +
-                    '" class="form-control" readonly></td><td><input type="hidden" name="lab[' + i +
-                    '][hasil]" value="0" class="form-control" required></td></td><td><button type="button" class="btn btn-danger remove-pen">Hapus</button></td></tr>'
-                );
-            }
-            ++i;
-        };
-
-        function addresep() {
-            var res = $("#reseplist option:selected").html();
-            var resid = $("#reseplist").val();
-            if (resid !== null) {
-                //code
-                $("#reseps").append('<tr><td><input type="hidden" name="resep[' + a + '][id]" value="' + resid +
-                    '" class="form-control" readonly></td><td width="30%"><input type="text" name="resep[' + a +
-                    '][nama]" value="' + res +
-                    '" class="form-control" readonly></td><td width ="10%"><input type="text" name="resep[' + a +
-                    '][jumlah]" placeholder="Jumlah" class="form-control" required><td width="30%"><input type="text" name="resep[' +
-                    a +
-                    '][aturan]" placeholder="Aturan pakai" class="form-control" required></td><td><button type="button" class="btn btn-danger remove-res">Hapus</button></td></tr>'
-                );
-            }
-            ++a;
-        };
-
-        $(document).on('click', '.remove-pen', function() {
-            $(this).parents('tr').remove();
-        });
-
-        $(document).on('click', '.remove-res', function() {
-            $(this).parents('tr').remove();
         });
     </script>
 

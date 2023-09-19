@@ -2,9 +2,9 @@
 @section('judul_halaman')
     Daftar Obat
 @endsection
-@section('deskripsi_halaman')
+{{-- @section('deskripsi_halaman')
     Daftar obat-obatan yang terdaftar di klinik
-@endsection
+@endsection --}}
 @section('content')
 
     <!--Modal Konfirmasi Delete-->

@@ -2,11 +2,10 @@
 @section('judul_halaman')
     Input Hasil Lab
 @endsection
-@section('deskripsi_halaman')
-    {{-- Upload excel stok obat --}}
-@endsection
+{{-- @section('deskripsi_halaman')
+    Upload excel stok obat
+@endsection --}}
 @section('content')
-    
     @include('layouts.identitas')
 
     @foreach ($datas as $data)
@@ -29,16 +28,15 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                <select num="{{ $num['lab'] }}" class="form-control "id="penunjang" name="penunjang">
-                                    <option value="" selected disabled>Pilih satu</option>
+                                <select class="selectpicker form-control "id="penunjang" name="penunjang" data-live-search="true" title="Pilih Pemeriksaan Lab">
                                     @foreach ($labs as $lab)
                                         <option satuan="{{ $lab->satuan }}" value="{{ $lab->id_lab }}">{{ $lab->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-sm-6">
-                                <a href="javascript:;" onclick="addpenunjang()" type="button" name="add"
-                                    id="add" class="btn btn-success">Tambahkan</a>
+                                <a href="javascript:;" onclick="addpenunjang()" type="button" name="add" id="add"
+                                    class="btn btn-success">Tambahkan</a>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -48,8 +46,8 @@
                                         @for ($i = 0; $i < $num['lab']; $i++)
                                             <tr>
                                                 <td><input type="hidden" name="lab[{{ $i }}][id]"
-                                                        value="{{ array_keys($data->labhasil)[$i] }}"
-                                                        class="form-control" readonly></td>
+                                                        value="{{ array_keys($data->labhasil)[$i] }}" class="form-control"
+                                                        readonly></td>
                                                 <td width="30%"><input type="text"
                                                         name="lab[{{ $i }}][nama]"
                                                         value="{{ get_value('labs', array_keys($data->labhasil)[$i], 'nama', 'id_lab') }}"
@@ -62,8 +60,8 @@
                                                         value='{{ get_value('labs', array_keys($data->labhasil)[$i], 'satuan', 'id_lab') }}'
                                                         readonly></td>
                                                 </td>
-                                                <td><button type="button"
-                                                        class="btn btn-danger remove-pen">Hapus</button></td>
+                                                <td><button type="button" class="btn btn-danger remove-pen">Hapus</button>
+                                                </td>
                                             </tr>
                                         @endfor
                                     @endif
@@ -72,8 +70,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-12 mb-3 mb-sm-0">
-                                <button type="submit" class="btn btn-primary btn-block" name="simpan"
-                                    value="simpan_edit">
+                                <button type="submit" class="btn btn-primary btn-block" name="simpan" value="simpan_edit">
                                     <i class="fas fa-save fa-fw"></i> Simpan
                                 </button>
                             </div>
@@ -112,7 +109,7 @@
                     '][hasil]" placeholder="Hasil" class="form-control" required><td width=20%"><input class="form-control" value=' +
                     satuan +
                     ' readonly></td></td><td><button type="button" class="btn btn-danger remove-pen">Hapus</button></td></tr>'
-                    );
+                );
             }
             ++i;
         };
@@ -130,7 +127,7 @@
                     '][jumlah]" placeholder="Jumlah" class="form-control" required><td><input type="text" name="resep[' +
                     a +
                     '][aturan]" placeholder="Aturan pakai" class="form-control" required></td><td><button type="button" class="btn btn-danger remove-res">Hapus</button></td></tr>'
-                    );
+                );
             }
             ++a;
         };

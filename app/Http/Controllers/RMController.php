@@ -27,11 +27,11 @@ class RMController extends Controller
         RekamMed::where('id_rm', $id)->update([
             'deleted' => 1,
         ]);
+        $id_pasien = RekamMed::where('id_rm', $id)->first()->id_pasien;
         $pesan = "Rekam medis berhasil dihapus!";
-        return redirect(route('rm.riwayat'))->with('pesan', $pesan);
+        return back();
     }
 
-    // TODO satuin sama simpan_rm
     public function update_rm(Request $request)
     {
         $this->validate($request, [
@@ -80,59 +80,61 @@ class RMController extends Controller
             $resep_dosis = "";
         }
 
-        $newresep = array();
+        // TODO edit
 
-        $oldresep = array_combine(encode(get_value('rm', $request->id, 'id_obats', 'id_rm')), encode(get_value('rm', $request->id, 'jumlah_obats', 'id_rm')));
-        foreach ($request->resep as $resep) {
-            $newresep[$resep['id_obats']] = $resep['jumlah_obats'];
-        }
-        if (empty($oldresep)) {
-            $resultanresep = resultan_resep($oldresep, $newresep);
-        } else {
-            $resultanresep = $newresep;
-        }
-        $errors = validasi_stok($resultanresep);
-        if ($errors !== NULL) {
-            return  back()->withErrors($errors);
-        }
+        // $newresep = array();
 
-        foreach ($resultanresep as $key => $value) {
-            $perintah = kurangi_stok($key, $value);
-            if ($perintah === false) {
-                $habis = array_push($habis, $key);
-            }
-        }
+        // $oldresep = array_combine(encode(get_value('rekam_meds', $request->id, 'id_obats', 'id_rm')), encode(get_value('rekam_meds', $request->id, 'jumlah_obats', 'id_rm')));
+        // foreach ($request->resep as $resep) {
+        //     $newresep[$resep['id_obats']] = $resep['jumlah_obats'];
+        // }
+        // if (empty($oldresep)) {
+        //     $resultanresep = resultan_resep($oldresep, $newresep);
+        // } else {
+        //     $resultanresep = $newresep;
+        // }
+        // $errors = validasi_stok($resultanresep);
+        // if ($errors !== NULL) {
+        //     return  back()->withErrors($errors);
+        // }
 
-        DB::table('rm')->where('id', $request->id)->update([
-            'idpasien' => $request->idpasien,
-            'ku' => $request->keluhan_utama,
-            'anamnesis' => $request->anamnesis,
-            'pxfisik' => $request->px_fisik,
-            'lab' => $lab_id,
-            'hasil' => $lab_hasil,
-            'id_diagnosis' => $request->id_diagnosis,
-            'resep' => $resep_id,
-            'jumlah' => $resep_jumlah,
-            'aturan' => $resep_dosis,
-            'dokter' => $request->dokter,
-            'updated_time' => Carbon::now(),
-        ]);
+        // foreach ($resultanresep as $key => $value) {
+        //     $perintah = kurangi_stok($key, $value);
+        //     if ($perintah === false) {
+        //         $habis = array_push($habis, $key);
+        //     }
+        // }
 
-        switch ($request->simpan) {
-            case 'simpan_edit':
-                $buka = route('rm.edit', $request->id);
-                $pesan = 'Data Rekam Medis berhasil disimpan!';
-                break;
-            case 'simpan_baru':
-                $buka = route('rm.tambah.id', $request->idpasien);
-                $pesan = 'Data Rekam Medis berhasil disimpan!';
-                break;
-        }
+        // DB::table('rm')->where('id', $request->id)->update([
+        //     'idpasien' => $request->idpasien,
+        //     'ku' => $request->keluhan_utama,
+        //     'anamnesis' => $request->anamnesis,
+        //     'pxfisik' => $request->px_fisik,
+        //     'lab' => $lab_id,
+        //     'hasil' => $lab_hasil,
+        //     'id_diagnosis' => $request->id_diagnosis,
+        //     'resep' => $resep_id,
+        //     'jumlah' => $resep_jumlah,
+        //     'aturan' => $resep_dosis,
+        //     'dokter' => $request->dokter,
+        //     'updated_time' => Carbon::now(),
+        // ]);
 
-        return redirect($buka)->with('pesan', $pesan);
+        // switch ($request->simpan) {
+        //     case 'simpan_edit':
+        //         $buka = route('rm.edit', $request->id);
+        //         $pesan = 'Data Rekam Medis berhasil disimpan!';
+        //         break;
+        //     case 'simpan_baru':
+        //         $buka = route('rm.tambah.id', $request->idpasien);
+        //         $pesan = 'Data Rekam Medis berhasil disimpan!';
+        //         break;
+        // }
+
+        $pesan = 'Data Rekam Medis berhasil disimpan!';
+        return redirect(route('rm.input'))->with('pesan',$pesan);
     }
     
-    // TODO edit bagian lab & obat masih error
     // Route::get('/rm/edit/{id}')
     public function edit_rm($id)
     {
@@ -172,12 +174,13 @@ class RMController extends Controller
     public function input_rm()
     {
         $pasiens = $this->pasiens;
+        $icds = KodeIcd::all();
         $cont = [
             'aria' => 'true',
             'show' => 'show',
             'col' => ''
         ];
-        return view('rm.input', compact('pasiens', 'cont'));
+        return view('rm.input', compact('pasiens', 'icds', 'cont'));
     }
 
     // Route::get('/rm/input/{idpasien}')
@@ -186,9 +189,9 @@ class RMController extends Controller
         $pasiens = $this->pasiens;
         $icds = KodeIcd::all();
         $dokters = Dokter::all();
-        $labs = Lab::all();
+        $labs = Lab::orderBy('nama')->get();
         $idens = Pasien::where('id_pasien', $id_pasien)->get();
-        $obats = Obat::where('deleted', 0)->get();
+        $obats = Obat::orderBy('nama_obat')->where('deleted', 0)->get();
         $cont = [
             'aria' => 'false',
             'show' => '',
@@ -260,9 +263,12 @@ class RMController extends Controller
             $this->validate($request, [
                 'lab.*.hasil' => 'required|numeric|digits_between:1,4',
             ]);
+
             $lab_id = decode('lab', 'id', $request->lab);
             $lab_hasil = decode('lab', 'hasil', $request->lab);
             $status_lab = 1;
+
+            // request->lab[id], [hasil]
         } else {
             $lab_id = "";
             $lab_hasil = "";
@@ -288,26 +294,28 @@ class RMController extends Controller
             $resep_dosis = "";
         }
 
-        $newresep = array();
-        $oldresep = array();
-        foreach ($request->resep as $resep) {
-            $newresep[$resep['id']] = $resep['jumlah'];
-        }
-        if (empty($oldresep)) {
-            $resultanresep = resultan_resep($oldresep, $newresep);
-        } else {
-            $resultanresep = $newresep;
-        }
+        if (isset($request->resep)) {
+            $newresep = array();
+            $oldresep = array();
+            foreach ($request->resep as $resep) {
+                $newresep[$resep['id']] = $resep['jumlah'];
+            }
+            if (empty($oldresep)) {
+                $resultanresep = resultan_resep($oldresep, $newresep);
+            } else {
+                $resultanresep = $newresep;
+            }
 
-        $errors = validasi_stok($resultanresep);
-        if ($errors !== NULL) {
-            return  back()->withErrors($errors);
-        }
+            $errors = validasi_stok($resultanresep);
+            if ($errors !== NULL) {
+                return  back()->withErrors($errors);
+            }
 
-        foreach ($resultanresep as $key => $value) {
-            $perintah = kurangi_stok($key, $value);
-            if ($perintah === false) {
-                $habis = array_push($habis, $key);
+            foreach ($resultanresep as $key => $value) {
+                $perintah = kurangi_stok($key, $value);
+                if ($perintah === false) {
+                    $habis = array_push($habis, $key);
+                }
             }
         }
 
@@ -328,10 +336,9 @@ class RMController extends Controller
         ]);
 
         $pesan = 'Data Rekam Medis berhasil disimpan!';
-         return redirect(route('rm.input'))->with('pesan',$pesan);
+        return redirect(route('rm.input'))->with('pesan',$pesan);
     }
 
-    // TODO edit tampilan
     // Route::get('/rm/lihat/{id}')
     public function lihat_rm($id)
     {
@@ -361,5 +368,48 @@ class RMController extends Controller
         $obats = Obat::all();
         $idens = Pasien::where('id_pasien', $id_pasien)->get();
         return view('rm.lihat', compact('idens', 'datas', 'num'));
+    }
+
+    public function rm_gigi()
+    {
+        $pasiens = $this->pasiens;
+        $elemen_gigi = [];
+        $cont = [
+            'aria' => 'true',
+            'show' => 'show',
+            'col' => ''
+        ];
+
+        for ($i = 11; $i < 19; $i++) {
+            array_push($elemen_gigi, $i);
+        }
+        for ($i = 21; $i < 29; $i++) {
+            array_push($elemen_gigi, $i);
+        }
+        for ($i = 31; $i < 39; $i++) {
+            array_push($elemen_gigi, $i);
+        }
+        for ($i = 41; $i < 49; $i++) {
+            array_push($elemen_gigi, $i);
+        }
+        for ($i = 51; $i < 56; $i++) {
+            array_push($elemen_gigi, $i);
+        }
+        for ($i = 61; $i < 66; $i++) {
+            array_push($elemen_gigi, $i);
+        }
+        for ($i = 71; $i < 76; $i++) {
+            array_push($elemen_gigi, $i);
+        }
+        for ($i = 81; $i < 86; $i++) {
+            array_push($elemen_gigi, $i);
+        }
+        
+        $pemeriksaan_gigi = [];
+
+        $elemen_gigis = json_encode($elemen_gigi);
+        $pemeriksaan_gigis = json_encode($pemeriksaan_gigi);
+
+        return view('rm.gigi', compact('pasiens', 'cont', 'elemen_gigis', 'pemeriksaan_gigis'));
     }
 }

@@ -14,7 +14,7 @@ class ObatController extends Controller
     // Route::get('/obat')
     public function index()
     {
-        $obats = Obat::all();
+        $obats = Obat::where('deleted', '<>', 1)->get();
         return view('obat.index', compact('obats'));
     }
 
@@ -41,6 +41,7 @@ class ObatController extends Controller
             'dosis' => $request->dosis,
             'satuan' => $request->satuan,
             'stok' => $request->stok,
+            'deleted' => 0,
 	    ]);
 
         $ids = Obat::orderBy('id_obat', 'desc')->first();
@@ -120,7 +121,7 @@ class ObatController extends Controller
         return Excel::download(new ObatExport, 'stok_obat.xlsx');
     }
     
-    //TODO simpan obat tergantung template user
+    //TODO baru fitur upload, next tambah simpan obat tergantung template user
     // Route::post('/obat/import_excel')
     public function import_excel(Request $request)
     {

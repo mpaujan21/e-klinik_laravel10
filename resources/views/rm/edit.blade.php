@@ -58,7 +58,7 @@
                                     class="text">Hapus Rekam Medis</span></a>
                         </div>
                     </div>
-                    <form class="user" action="#" method="post">
+                    <form class="user" action="{{ route('rm.update', $data->id_rm) }}" method="post">
                         {{ csrf_field() }}
                         <input type="hidden" name="idpasien" value="{{ $data->id_pasien }}">
                         <input type="hidden" name="id" value="{{ $data->id }}">
@@ -102,12 +102,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group2 row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                 <label for="penunjang">Pemeriksaan Penunjang</label>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                 <select num="{{ $num['lab'] }}" class="form-control "id="penunjang" name="penunjang">
                                     <option value="" selected disabled>Pilih satu</option>
@@ -120,50 +120,52 @@
                                 <a href="javascript:;" onclick="addpenunjang()" type="button" name="add"
                                     id="add" class="btn btn-success">Tambahkan</a>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group row">
-                            <div class="col-sm-12 mb-3 mb-sm-0">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
                                 <table id="dynamicTable" width="75%">
-                                    @if ($data->lab != null)
+                                    @if ($data->id_labs != null)
                                         @for ($i = 0; $i < $num['lab']; $i++)
                                             <tr>
-                                                <td><input type="hidden" name="lab[{{ $i }}][id]"
+                                                <input type="hidden" name="lab[{{ $i }}][id]"
                                                         value="{{ array_keys($data->labhasil)[$i] }}"
-                                                        class="form-control" readonly></td>
+                                                        class="form-control" readonly>
                                                 <td width="30%"><input type="text"
                                                         name="lab[{{ $i }}][nama]"
-                                                        value="{{ get_value('lab', array_keys($data->labhasil)[$i], 'nama') }}"
+                                                        value="{{ get_value('labs', array_keys($data->labhasil)[$i], 'nama', 'id_lab') }}"
                                                         class="form-control" readonly></td>
-                                                {{-- <td width="10%"><input type="text"
+                                                <td width="10%"><input type="text"
                                                         name="lab[{{ $i }}][hasil]"
                                                         value="{{ $data->labhasil[array_keys($data->labhasil)[$i]] }}"
-                                                        placeholder="Hasil" class="form-control" required>
+                                                        placeholder="Hasil" class="form-control" readonly>
                                                 <td width=10%"><input class="form-control"
-                                                        value='{{ get_value('lab', array_keys($data->labhasil)[$i], 'satuan') }}'
+                                                        value='{{ get_value('labs', array_keys($data->labhasil)[$i], 'satuan', 'id_lab') }}'
                                                         readonly></td>
-                                                </td> --}}
-                                                <td><button type="button"
-                                                        class="btn btn-danger remove-pen">Hapus</button></td>
+                                                </td>
                                             </tr>
                                         @endfor
                                     @endif
                                 </table>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group2 row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                 <label for="reseplist">Resep</label>
-                                `
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-9 mb-0 mb-sm-0">
-                                <select num="{{ $num['resep'] }}" class="form-control " name="reseplist"
+                                {{-- <select num="{{ $num['resep'] }}" class="form-control " name="reseplist"
                                     id="reseplist">
                                     <option value="" selected disabled>Pilih satu</option>
                                     @foreach ($obats as $obat)
                                         <option value="{{ $obat->id }}">{{ $obat->nama_obat }} {{ $obat->jenis }}
                                             {{ $obat->dosis }}{{ $obat->satuan }}</option>
+                                    @endforeach
+                                </select> --}}
+                                <select class="selectpicker form-control" name="reseplist" id="reseplist" data-live-search="true" title="Pilih Obat">
+                                    @foreach ($obats as $obat)
+                                        <option value="{{ $obat->id_obat }}">{{ $obat->nama_obat }} {{ $obat->sediaan }} {{ $obat->dosis }}{{ $obat->satuan }} - Stok: {{ $obat->stok }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -175,7 +177,7 @@
                         <div class="form-group row">
                             <div class="col-sm-12 mb-3 mb-sm-0">
                                 <table width="75%" id="reseps">
-                                    @if ($data->resep != null)
+                                    @if ($data->id_obats != null)
                                         @for ($i = 0; $i < $num['resep']; $i++)
                                             <tr>
                                                 <td><input type="hidden" name="resep[{{ $i }}][id]"
@@ -183,7 +185,7 @@
                                                         class="form-control" readonly></td>
                                                 <td width="30%"><input type="text"
                                                         name="resep[{{ $i }}][nama]"
-                                                        value="{{ get_value('obat', array_keys($data->allresep)[$i], 'nama_obat') }} {{ get_value('obat', array_keys($data->allresep)[$i], 'sediaan') }} {{ get_value('obat', array_keys($data->allresep)[$i], 'dosis') }} {{ get_value('obat', array_keys($data->allresep)[$i], 'satuan') }}"
+                                                        value="{{ get_value('obats', array_keys($data->allresep)[$i], 'nama_obat', 'id_obat') }} {{ get_value('obats', array_keys($data->allresep)[$i], 'jenis', 'id_obat') }} {{ get_value('obats', array_keys($data->allresep)[$i], 'dosis', 'id_obat') }} {{ get_value('obats', array_keys($data->allresep)[$i], 'satuan', 'id_obat') }}"
                                                         class="form-control" readonly></td>
                                                 <td width="10%"><input type="text"
                                                         name="resep[{{ $i }}][jumlah]"

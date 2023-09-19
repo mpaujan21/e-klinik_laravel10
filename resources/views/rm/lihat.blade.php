@@ -43,38 +43,32 @@
 
     @foreach ($datas as $data)
         <div class="card shadow mb-4">
-            <a href="#tambahrm" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
-                aria-controls="tambahrm">
+            <a href="#rm" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
+                aria-controls="rm">
                 <h6 class="m-0 font-weight-bold text-primary">Rekam Medis Pasien</h6>
             </a>
-            <div class="collapse show" id="tambahrm">
+            <div class="collapse show" id="rm">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12" align="right">
-                            <a href="{{ route('rm.edit', $data->id_rm) }}" class="btn btn-warning btn-icon-split">
-                                <span class="icon">
-                                    <i style="padding-top:4px"class="fas fa-pen"></i>
-                                </span>
-                                <span class="text">Edit</span>
-                            </a>
-                            <a href="javascript:;" data-toggle="modal" onclick="deleteData({{ $data->id_rm }})"
-                                data-target="#DeleteModal" class="btn btn-icon-split btn-danger">
-                                <span class="icon"><i class="fa  fa-trash" style="padding-top: 4px;"></i></span><span
-                                    class="text">Hapus Rekam Medis</span></a>
+                    @if (Auth::user()->role === 1 || Auth::user()->role === 4)
+                        <div class="row">
+                            <div class="col-sm-12" align="right">
+                                <a href="{{ route('rm.edit', $data->id_rm) }}" class="btn btn-warning btn-icon-split">
+                                    <span class="icon">
+                                        <i style="padding-top:4px"class="fas fa-pen"></i>
+                                    </span>
+                                    <span class="text">Edit</span>
+                                </a>
+                                <a href="javascript:;" data-toggle="modal" onclick="deleteData({{ $data->id_rm }})"
+                                    data-target="#DeleteModal" class="btn btn-icon-split btn-danger">
+                                    <span class="icon"><i class="fa  fa-trash" style="padding-top: 4px;"></i></span><span
+                                        class="text">Hapus Rekam Medis</span></a>
+                            </div>
                         </div>
-                    </div>
-                    {{-- <form class="user" action="{{ route('rm.update') }}" method="post"> --}}
-                    <form class="user" action="#" method="post">
-                        {{ csrf_field() }}
+                    @endif
 
-                        <input type="hidden" name="idpasien" value="{{ $data->id_pasien }}">
-                        <input type="hidden" name="id" value="{{ $data->id_rm }}">
                         <div class="form-group row">
                             <div class="col-sm-2 text-md-right">
-                                <label for="keluhan-utama"><strong>Tanggal Periksa</strong></label>
-                            </div>
-                            <div class="col-sm-1 text-md-left">
-                                :
+                                <label for="keluhan-utama"><strong>Tanggal Periksa :</strong></label>
                             </div>
                             <div class="col-sm-8">
                                 <p class="text-md-left">{{ format_date($data->created_at) }}</p>
@@ -82,10 +76,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2 text-md-right">
-                                <label><strong>Dokter Pemeriksa</strong></label>
-                            </div>
-                            <div class="col-sm-1 text-md-left">
-                                :
+                                <label><strong>Dokter Pemeriksa :</strong></label>
                             </div>
                             <div class="col-sm-8">
                                 <p class="text-md-left">{{ $data->dokter->user->nama }}</p>
@@ -93,10 +84,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2 text-md-right">
-                                <label for="keluhan-utama"><strong>Keluhan Utama</strong></label>
-                            </div>
-                            <div class="col-sm-1 text-md-left">
-                                :
+                                <label for="keluhan-utama"><strong>Keluhan Utama :</strong></label>
                             </div>
                             <div class="col-sm-8">
                                 <p class="text-md-left">{{ $data->keluhan }}</p>
@@ -104,10 +92,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2 text-md-right">
-                                <label for="keluhan-utama"><strong>Anamnesis</strong></label>
-                            </div>
-                            <div class="col-sm-1 text-md-left">
-                                :
+                                <label for="keluhan-utama"><strong>Anamnesis :</strong></label>
                             </div>
                             <div class="col-sm-8">
                                 <p class="text-md-left">{{ $data->anamnesis }}</p>
@@ -115,10 +100,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2 text-md-right">
-                                <label for="keluhan-utama"><strong>Pemeriksaan Fisik</strong></label>
-                            </div>
-                            <div class="col-sm-1 text-md-left">
-                                :
+                                <label for="keluhan-utama"><strong>Pemeriksaan Fisik :</strong></label>
                             </div>
                             <div class="col-sm-8">
                                 <p class="text-md-left">{{ $data->pfisik }}</p>
@@ -126,10 +108,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2 text-md-right">
-                                <label for="keluhan-utama"><strong>Diagnosis</strong></label>
-                            </div>
-                            <div class="col-sm-1 text-md-left">
-                                :
+                                <label for="keluhan-utama"><strong>Diagnosis :</strong></label>
                             </div>
                             <div class="col-sm-8">
                                 <p class="text-md-left">{{ $data->diagnosis->kode }} - {{ $data->diagnosis->nama_id }}</p>
@@ -137,10 +116,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2 text-md-right">
-                                <label for="keluhan-utama"><strong>Pemeriksaan Lab</strong></label>
-                            </div>
-                            <div class="col-sm-1 text-md-left">
-                                :
+                                <label for="keluhan-utama"><strong>Pemeriksaan Lab :</strong></label>
                             </div>
                             <div class="col-sm-8">
                                 @if ($data->id_labs != null)
@@ -154,12 +130,8 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2 text-md-right">
-                                <label for="keluhan-utama"><strong>Resep</strong></label>
+                                <label for="keluhan-utama"><strong>Resep :</strong></label>
                             </div>
-                            <div class="col-sm-1 text-md-left">
-                                :
-                            </div>
-
                             <div class="col-sm-8">
                                 @if ($data->id_obats != null)
                                     @for ($i = 0; $i < $num['resep']; $i++)
@@ -171,7 +143,6 @@
                                     @endfor
                                 @endif
                             </div>
-
                         </div>
                         <br>
                         {{-- <div class="form-group row">
@@ -182,7 +153,6 @@
                                     <span class="icon"><i class="fa  fa-print"></i></span><span class="text">
                                         Cetak</span></a>
                             </div> --}}
-                    </form>
                 </div>
             </div>
         </div>
@@ -204,4 +174,5 @@
             $('#PrintRM').printThis();
         }
     </script>
+    
 @endsection

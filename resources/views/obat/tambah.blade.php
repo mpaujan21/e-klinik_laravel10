@@ -2,9 +2,9 @@
 @section('judul_halaman')
     Tambah Obat
 @endsection
-@section('deskripsi_halaman')
+{{-- @section('deskripsi_halaman')
     Tambahkan obat baru dengan mengisi formulir berikut
-@endsection
+@endsection --}}
 @section('content')
 
     <div class="card shadow mb-4">

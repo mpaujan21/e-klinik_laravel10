@@ -14,9 +14,9 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{ URL::asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('css/sb-admin-2.css') }}" rel="stylesheet">
+    {{-- <link href="{{ URL::asset('css/sb-admin-2.min.css') }}" rel="stylesheet"> --}}
 
-    {{-- TEST SIDEBAR --}}
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css'>
     <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}">
 
@@ -39,6 +39,16 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ URL::asset('js/demo/datatables-demo.js') }}"></script>
+
+    <!-- Odontogram -->
+    {{-- <link rel="stylesheet" href="{{ URL::asset('odontogram/css/style.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('odontogram/css/jquery-ui-1.8.17.custom.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('odontogram/css/jquery.svg.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('odontogram/css/odontograma.css') }}"> --}}
+
+    {{-- Selectpicker --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
     @livewireStyles
 </head>

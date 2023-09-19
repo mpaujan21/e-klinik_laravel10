@@ -39,9 +39,9 @@
         <!-- Card Header - Accordion -->
         <a class="d-block card-header py-3">
             @if (empty($kunjungans))
-                <h5 class="m-0 font-weight-bold text-primary">Tidak ada jadwal kunjungan untuk {{ $name }}</h5>
+                <h6 class="m-0 font-weight-bold text-primary">Tidak ada jadwal kunjungan untuk {{ $name }}</h6>
             @else
-                <h5 class="m-0 font-weight-bold text-primary">Jadwal Kunjungan {{ $name }}</h5>
+                <h6 class="m-0 font-weight-bold text-primary">Jadwal Kunjungan {{ $name }}</h6>
             @endif
         </a>
     </div>

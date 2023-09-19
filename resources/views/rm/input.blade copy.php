@@ -3,17 +3,11 @@
     @section('judul_halaman')
         Input Rekam Medis
     @endsection
-    {{-- @section('deskripsi_halaman')
+    @section('deskripsi_halaman')
         Pilih pasien untuk menginput rekam medis
-    @endsection --}}
+    @endsection
 {{-- @endforeach --}}
 @section('content')
-
-    {{-- Selectpicker --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-
-    <!-- Modal -->
-    {{-- @include('layouts.list_diagnosis', ['icds' => $icds]) --}}
 
     @if (!isset($idens))
         @include('layouts.list_pasien', ['input_page' => true])
@@ -64,71 +58,47 @@
                                 <textarea type="date" class="form-control" name="pfisik" required></textarea>
                             </div>
                         </div>
-                        {{-- BACKUP
                         <div class="form-group row">
                             <div class="col-sm-12 mb-3 mb-sm-0">
                                 <label for="diagnosis">Diagnosis</label>
                                 <select class="form-control" name="id_diagnosis" id="id_diagnosis">
+                                    {{-- {{ Auth::user()->role !== 3 ? 'disabled="true"' : '' }}> --}}
                                     <option value="" selected disabled>Pilih satu</option>
                                     @foreach ($icds as $icd)
                                         <option value="{{ $icd->id_diagnosis }}">{{ $icd->kode }} - {{ $icd->nama_id }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                        </div> --}}
-
-                        {{-- BACKUP 2
-                        <div class="form-group2 row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <label for="diagnosis">Diagnosis</label>
-                            </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-sm-8 mb-3 mb-sm-0">
-                                <input type="hidden" class="form-control"  id="id_diagnosis" name="id_diagnosis" readonly>
-                                <input type="text" class="form-control" id="diagnosis" name="diagnosis" readonly>
-                            </div>
-                            <div class="col-sm-3">
-                                <a data-toggle="modal" data-target="#DiagnosisModal" type="button" class="btn btn-primary">Pilih Diagnosis</a>
-                            </div>
-                        </div> --}}
 
-                        <div class="form-group2 row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <label for="diagnosis">Diagnosis</label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <div class="col-sm-12 mb-3 mb-sm-0">
-                                <select class="selectpicker form-control" name="id_diagnosis" data-live-search="true" title="Pilih Diagnosis">
+                                <label for="exampleDataList" class="form-label">test diagnosis 2</label>
+                                <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
+                                <datalist id="datalistOptions">
                                     @foreach ($icds as $icd)
-                                        <option value="{{ $icd->id_diagnosis }}">{{ $icd->kode }} - {{ $icd->nama_id }}</option>
+                                        <option value="{{ $icd->kode }} - {{ $icd->nama_id }}">{{ $icd->kode }} - {{ $icd->nama_id }}</option>
                                     @endforeach
-                                  </select>
+                                </datalist>
                             </div>
-                        </div>
-                        <div class="form-group row"></div>
+                        </div> --}}
 
-                        <div class="form-group2 row">
+                        <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                 <label for="penunjang">Pemeriksaan Penunjang</label>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-8 mb-3 mb-sm-0">
-                                {{-- <select class="form-control "id="penunjang" name="penunjang">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <select class="form-control "id="penunjang" name="penunjang">
+                                    {{-- {{ Auth::user()->profesi !== 'Dokter' ? 'disabled="true"' : '' }}> --}}
                                     <option value="" selected disabled>Pilih satu</option>
-                                    @foreach ($labs as $lab)
-                                        <option satuan="{{ $lab->satuan }}" value="{{ $lab->id_lab }}">{{ $lab->nama }}</option>
-                                    @endforeach
-                                </select> --}}
-                                <select class="selectpicker form-control "id="penunjang" name="penunjang" data-live-search="true" title="Pilih Pemeriksaan Lab">
                                     @foreach ($labs as $lab)
                                         <option satuan="{{ $lab->satuan }}" value="{{ $lab->id_lab }}">{{ $lab->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <a href="javascript:;" onclick="addpenunjang()" type="button" name="add"
                                     id="add" class="btn btn-success">Tambahkan</a>
                             </div>
@@ -138,20 +108,16 @@
                                 <table id="dynamicTable"></table>
                             </div>
                         </div>
-                        <div class="form-group2 row">
+                        <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                 <label for="reseplist">Resep</label>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-8 mb-0 mb-sm-0">
-                                {{-- <select class="form-control " name="reseplist" id="reseplist">
+                            <div class="col-sm-9 mb-0 mb-sm-0">
+                                <select class="form-control " name="reseplist" id="reseplist">
+                                    {{-- {{ Auth::user()->profesi !== 'Dokter' ? 'disabled="true"' : '' }}> --}}
                                     <option value="" selected disabled>Pilih satu</option>
-                                    @foreach ($obats as $obat)
-                                        <option value="{{ $obat->id_obat }}">{{ $obat->nama_obat }} {{ $obat->sediaan }} {{ $obat->dosis }}{{ $obat->satuan }} - Stok: {{ $obat->stok }}</option>
-                                    @endforeach
-                                </select> --}}
-                                <select class="selectpicker form-control" name="reseplist" id="reseplist" data-live-search="true" title="Pilih Obat">
                                     @foreach ($obats as $obat)
                                         <option value="{{ $obat->id_obat }}">{{ $obat->nama_obat }} {{ $obat->sediaan }} {{ $obat->dosis }}{{ $obat->satuan }} - Stok: {{ $obat->stok }}</option>
                                     @endforeach
@@ -193,8 +159,6 @@
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-    
     <script type="text/javascript">
         var i = 0;
         var a = 0;
@@ -229,11 +193,6 @@
             }
             ++a;
         };
-
-        function getDiagnosis(id_diagnosis, diagnosis){
-            document.getElementById("id_diagnosis").value= id_diagnosis;
-            document.getElementById("diagnosis").value= diagnosis;
-        }
 
         $(document).on('click', '.remove-pen', function() {
             $(this).parents('tr').remove();
